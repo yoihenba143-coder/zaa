@@ -88,14 +88,14 @@ export default function AdminDashboardPage() {
   const router = useRouter();
   const [, startTransition] = useTransition();
 
-  // Auth State
+ 
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean | null>(null);
   const [adminUser, setAdminUser] = useState<{ name: string; email: string } | null>(null);
 
-  // Active Tab
+ 
   const [activeTab, setActiveTab] = useState<"overview" | "orders" | "products" | "customers">("overview");
 
-  // Data State
+
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<Stats>({
     totalRevenue: 0,
@@ -110,7 +110,7 @@ export default function AdminDashboardPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [users, setUsers] = useState<User[]>([]);
 
-  // Filtering & Search
+  
   const [orderSearch, setOrderSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [toastMessage, setToastMessage] = useState<string | null>(null);

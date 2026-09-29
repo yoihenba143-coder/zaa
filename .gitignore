@@ -66,3 +66,5 @@ Thumbs.db
 # Deployment
 .vercel
 *_antigravity-ide
+.open-next/
+.wrangler/
