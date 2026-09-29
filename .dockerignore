@@ -1,0 +1,11 @@
+node_modules
+.next
+.open-next
+.wrangler
+.git
+.gitignore
+.env
+.env*.local
+*.log
+README.md
+zaa_backup.sql
