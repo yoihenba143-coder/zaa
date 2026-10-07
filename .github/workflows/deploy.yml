@@ -7,13 +7,13 @@ on:
     paths-ignore:
       - "README.md"
       - ".gitignore"
-  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     name: Build & Deploy to Cloudflare
     runs-on: ubuntu-latest
-    environment: Dev # Links secrets from GitHub Environment "Dev"
+    environment: Dev # Required: loads secrets from the 'Dev' environment
 
     steps:
       - name: 1. Checkout Repository
