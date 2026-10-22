@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 
-export async function PUT(request: Request) {
+export async function handleRegisterRequest(request: Request) {
   try {
     const { name, email, password } = await request.json();
 
@@ -19,14 +19,16 @@ export async function PUT(request: Request) {
       );
     }
 
+    const normalizedEmail = email.trim().toLowerCase();
+
     console.log("REGISTER DATA:", {
       name,
-      email,
+      email: normalizedEmail,
       password: "provided",
     });
 
     const existingUser = await prisma.user.findUnique({
-      where: { email },
+      where: { email: normalizedEmail },
     });
 
     if (existingUser) {
@@ -39,7 +41,7 @@ export async function PUT(request: Request) {
     const user = await prisma.user.create({
       data: {
         name,
-        email,
+        email: normalizedEmail,
         password,
       },
     });
@@ -69,4 +71,12 @@ export async function PUT(request: Request) {
       { status: 500 }
     );
   }
+}
+
+export async function POST(request: Request) {
+  return handleRegisterRequest(request);
+}
+
+export async function PUT(request: Request) {
+  return handleRegisterRequest(request);
 }

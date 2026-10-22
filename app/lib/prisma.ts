@@ -5,12 +5,29 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+function getConnectionString(): string {
+  if (process.env.DATABASE_URL) {
+    return process.env.DATABASE_URL;
+  }
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { getCloudflareContext } = require("@opennextjs/cloudflare");
+    const ctx = getCloudflareContext();
+    if (ctx?.env?.DATABASE_URL) {
+      return ctx.env.DATABASE_URL;
+    }
+  } catch {
+    // not in cloudflare context
+  }
+  return "";
+}
+
 function getPrismaClient(): PrismaClient {
   if (globalForPrisma.prisma) {
     return globalForPrisma.prisma;
   }
 
-  const connectionString = process.env.DATABASE_URL;
+  const connectionString = getConnectionString();
   if (!connectionString) {
     console.warn(
       "[Prisma] Warning: DATABASE_URL is not set. Ensure it is configured in Cloudflare Worker environment variables."
@@ -25,9 +42,7 @@ function getPrismaClient(): PrismaClient {
     adapter,
   });
 
-  if (process.env.NODE_ENV !== "production") {
-    globalForPrisma.prisma = client;
-  }
+  globalForPrisma.prisma = client;
 
   return client;
 }

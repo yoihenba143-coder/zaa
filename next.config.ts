@@ -2,7 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  serverExternalPackages: ["pg-cloudflare"],
+  serverExternalPackages: [
+    "@prisma/client",
+    ".prisma/client",
+    "@prisma/adapter-pg",
+    "pg-cloudflare",
+    "pg",
+  ],
   turbopack: {
     root: __dirname,
   },
@@ -10,6 +16,7 @@ const nextConfig: NextConfig = {
     "**/*": [
       "./node_modules/pg-cloudflare/dist/**",
       "./node_modules/pg-cloudflare/esm/**",
+      "./node_modules/.prisma/client/**",
     ],
   },
 };

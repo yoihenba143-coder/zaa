@@ -20,7 +20,7 @@ import GoogleAuthButton from "@/components/GoogleAuthButton";
 
 
   const response = await fetch("/api/auth/register", {
-    method: "PUT",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
@@ -47,9 +47,11 @@ import GoogleAuthButton from "@/components/GoogleAuthButton";
   }
 
   if (!response.ok) {
-    throw new Error(
-      data.message || data.error || "Registration failed"
-    );
+    const errorMsg =
+      data.error && data.message && data.message !== data.error
+        ? `${data.message}: ${data.error}`
+        : data.message || data.error || "Registration failed";
+    throw new Error(errorMsg);
   }
 
   return true;
