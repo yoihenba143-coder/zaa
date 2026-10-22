@@ -9,5 +9,8 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "workers_dev": true
+  "workers_dev": true,
+  "vars": {
+    "DATABASE_URL": "postgresql://postgres.tspwpnprdytsvhqhkekg:Yohenba2486@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
+  }
 }
